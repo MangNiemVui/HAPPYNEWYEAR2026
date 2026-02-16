@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="360" viewBox="0 0 220 360" role="img" aria-label="Lồng đèn đỏ">
+  <defs>
+    <linearGradient id="r" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff4b5c"/>
+      <stop offset="0.55" stop-color="#c80020"/>
+      <stop offset="1" stop-color="#8f0018"/>
+    </linearGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe7a3"/>
+      <stop offset="1" stop-color="#ffb11f"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- string -->
+  <path d="M110 0 C110 36 92 40 92 64" fill="none" stroke="#f3d27c" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- top cap -->
+  <rect x="70" y="55" width="80" height="26" rx="10" fill="url(#g)" filter="url(#shadow)"/>
+  <rect x="60" y="78" width="100" height="16" rx="8" fill="#f5cf6a" opacity="0.9"/>
+
+  <!-- body -->
+  <path d="M110 92
+           C50 92 26 150 26 200
+           C26 268 62 314 110 314
+           C158 314 194 268 194 200
+           C194 150 170 92 110 92 Z"
+        fill="url(#r)" stroke="url(#g)" stroke-width="8" filter="url(#shadow)"/>
+
+  <!-- ribs -->
+  <g opacity="0.28" stroke="#ffe7a3" stroke-width="6" stroke-linecap="round">
+    <path d="M62 112 C44 146 40 174 40 200 C40 238 54 272 74 296"/>
+    <path d="M88 98 C74 140 70 172 70 200 C70 244 78 274 94 304"/>
+    <path d="M132 98 C146 140 150 172 150 200 C150 244 142 274 126 304"/>
+    <path d="M158 112 C176 146 180 174 180 200 C180 238 166 272 146 296"/>
+  </g>
+
+  <!-- center badge -->
+  <circle cx="110" cy="205" r="34" fill="url(#g)" opacity="0.95"/>
+  <text x="110" y="215" text-anchor="middle" font-size="26" font-weight="900"
+        font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" fill="#8f0018">福</text>
+
+  <!-- bottom cap -->
+  <rect x="58" y="306" width="104" height="16" rx="8" fill="#f5cf6a"/>
+  <rect x="70" y="320" width="80" height="20" rx="10" fill="url(#g)"/>
+
+  <!-- tassel -->
+  <path d="M110 340 C110 350 100 354 100 360" fill="none" stroke="#f3d27c" stroke-width="6" stroke-linecap="round"/>
+  <g stroke="#f3d27c" stroke-width="5" stroke-linecap="round">
+    <path d="M110 342 L98 356"/>
+    <path d="M110 342 L110 358"/>
+    <path d="M110 342 L122 356"/>
+  </g>
+</svg>

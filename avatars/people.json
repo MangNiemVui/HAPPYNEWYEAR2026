@@ -1,0 +1,165 @@
+[
+  {
+    "key": "bethucute",
+    "label": "Chủ sở hữu",
+    "pass": "29090302",
+    "role": "owner",
+    "exts": ["jpg", "png", "webp", "jpeg"],
+    "wishes": [
+      "👑 {name} ơi, năm {year} chúc bạn bình an – vui vẻ – giàu có, mọi điều như ý! ✨💖",
+      "👑 Chúc {name} năm {year} rực rỡ như pháo hoa, nhẹ nhàng như pastel, hạnh phúc thật nhiều! 🎆🌸"
+    ]
+  },
+  {
+    "key": "yellowperson",
+    "label": "Hồng Nhung",
+    "pass": "07102002",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"],
+    "firstWish": "Cảm  ơn bạn iu đã ở bên mình nhiều năm qua, cảm ơn bà  đã chịu đựng sự khùng điên  của tôi cảm ơn  đã không  bỏ rơi khi  tôi khó khăn nhất kkk cũm chưa biết phải khó khăn nhất không...Chúc bà lun vui vẻ hạnh phúc tốt nghiệp thạc sĩ  kiếm nhiều tiền dẫn tôi đi MỸ.   NHỚ THƯƠNG TÔI NHIỀU HƠN"
+  },
+    {
+    "key": "ethereal",
+    "label": "Anh Quỳnh",
+    "pass": "29092003",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"],
+    "firstWish": "Chúc cậu lun vui vẻ hạnh phúc nhé🤩. Mong năm nay cậu tốt nghiệp thành công rực  rỡ . Mong mọi việc cậu mong đều thành công và thuận lợi. Ùmmm những gì mà mình muốn nói chắc cậu đã xem qua hết rồi kkk. Mình rất thích một câu nói \"Tôi cho bạn biết tôi thích bạn không  hẳn là muốn ở bên cạnh bạn,chỉ là mong rằng sau này bạn khi gặp thăng trầm của cuộc đời thì đừng nản chí, bởi ít nhất đã có một người bị sức hút của bạn mà hấp dẫn. Trước đây như thế ,về sau cũng như vậy\" Mong cậu lun tự tin, xinh đẹp và tỏa sáng nhé...Lời cuối thấy hoa nở là tốt rồi nên cậu ở bên ai cũng được, cậu vui là mình yên lòng rồi💕. Nói xàm đủ rồi nhó bấm đổi lời chúc để nhận nhiều lời chúc hay nhé 😂😎"
+  },
+  {
+    "key": "tramkelly",
+    "label": "Chị gái gia trưởng",
+    "pass": "23032001",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"],
+    "firstWish": "💼 Chúc chị tìm được công việc tốt nhiều tiền, lun lun xinh đẹp như giờ nha.Chúc chị lun hạnh phúc và tìm được người iu thương nha...vẫn câu nói đó nghe chửi thì vui nhưng đừng khó tính với em quáaa...hihihihi!"
+  },
+  {
+    "key": "baisau",
+    "label": "Thảo chó",
+    "pass": "07052002",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"],
+    "firstWish": "Chúc mày hạnh phúc bên lựa chọn của mày nha cưới thì t để giành đi mà giờ không đi vàng được rồi kkk thông cảm nho. Phải hạnh phúc nho nhỏ ơi"
+  },
+  {
+    "key": "cholongnach",
+    "label": "Linh Nhi",
+    "pass": "02032002",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"],
+    "firstWish": "Mau mau cưới lẹ dùm tao đi nhanh lên quá lâu rồi. Hạnh phúc nhiều tiền có tiềntiền mở shop cho t thẻ VIP giảm 50% nhóa"
+  },
+  {
+    "key": "nguyenthu",
+    "label": "Minh Thư",
+    "pass": "12062002",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"],
+     "firstWish": " Công việc thuận lợi hơn nhiều tiền nhé lun cười nhiều sống thoải mái không áp lực không khóc nhè nữa nghe chưa"
+  },
+  {
+    "key": "lovisong2",
+    "label": "Như Ngọc",
+    "pass": "22052001",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"],
+     "firstWish": " HẠNH PHÚC, GIÀU CÓ, NHIỀU TIỀN, TÌM ĐC 1 NGƯỜI THƯƠNG MÌNH NHÉ CHỊ GIÀ, thương tôi nhiều hơn nhéee kkkk"
+  },
+  {
+    "key": "chanhiu",
+    "label": "Châu Anh",
+    "pass": "02072002",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"],
+     "firstWish": " Mong mày hạnh phúc tìm được người iu thương mày thật lòng có thể bảo vệ và phù hợp với mày iu mày siêu nhiều nhé, có công việc thuận lợi hơn phù hợp hơn... thương tao nhiều hơn nè cho tao 1 chỉ vàng là được kkkk"
+  },
+  {
+    "key": "cogaitamlinh",
+    "label": "Nguyễn Ngọc",
+    "pass": "11102002",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"]
+  },
+  {
+    "key": "dangthu",
+    "label": "Đặng Thư",
+    "pass": "15122003",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"],
+    "firstWish": "🎓 Chúc em tốt nghiệp thạc sĩ thành công! Chúc em lun vui vẻ bên người iu  nè bớt bắt nạt con bé lại nè. Tìm được công việc phù hợp và em yêu thích nhé."
+  },
+  {
+    "key": "nhuy",
+    "label": "Như Ý",
+    "pass": "28012004",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"],
+     "firstWish": " Khóa luận được A+ nhé cố lên nè!!. Lun xinh đẹp và vui vẻ như giờ nha, kkk không biết sao còn chơi mà coi như còn duyên đi. Thương chị mày nhiều hơn nhé kkk"
+  },
+  {
+    "key": "khách",
+    "label": "khách",
+    "pass": "123",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"]
+  },
+  {
+    "key": "chidep",
+    "label": "Tường Di",
+    "pass": "08112001",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"],
+    "firstWish": "💎 Chúc bà mau làm phú bà, phú bà, phú bà cái gì quan trọng nhắc lại lại!"
+  },
+  {
+    "key": "cotbao",
+    "label": "Tiến",
+    "pass": "22122002",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"],
+     "firstWish": " TỐT NGHIỆP! TỐT NGHIỆP! TỐT NGHIỆP! cái  gì quan trọng nhắc lại 3 lần nhé. Mong mày tìm được người mà yêu mày nhiều như mày yêu họ và phải hạnh phúc nha nếu mà về di linh lun tao xuống di linh nhớ đón tiếp đó nghe chưa bro"
+  },
+  {
+    "key": "xuanmai",
+    "label": "Chíp",
+    "pass": "16062003",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"]
+  },
+  {
+    "key": "thuyhiencocuocgoikhac",
+    "label": "Thúy Hiền",
+    "pass": "18122002",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"]
+  },
+  {
+    "key": "congai",
+    "label": "Minh Thư",
+    "pass": "18092006",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"]
+  },
+  {
+    "key": "sapdautrunghi",
+    "label": "Cát Tường",
+    "pass": "13072002",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"]
+  },
+  {
+    "key": "lemon",
+    "label": "Mỹ Anh",
+    "pass": "21062002",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"]
+  },
+  {
+    "key": "giaquy",
+    "label": "Gia Quý",
+    "pass": "26092002",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"]
+  }
+]

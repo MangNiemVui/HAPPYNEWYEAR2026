@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Cánh hoa">
+  <defs>
+    <radialGradient id="p" cx="35%" cy="30%" r="70%">
+      <stop offset="0" stop-color="#ffd3df"/>
+      <stop offset="0.65" stop-color="#ff8fb2"/>
+      <stop offset="1" stop-color="#ff5c8a"/>
+    </radialGradient>
+  </defs>
+  <path d="M33 6
+           C42 12 52 24 52 34
+           C52 47 41 58 28 58
+           C18 58 10 51 10 41
+           C10 25 22 12 33 6 Z"
+        fill="url(#p)" opacity="0.95"/>
+  <path d="M33 10
+           C39 15 46 24 46 33
+           C46 43 38 51 28 51
+           C21 51 15 46 15 39
+           C15 26 24 16 33 10 Z"
+        fill="#fff" opacity="0.18"/>
+</svg>
