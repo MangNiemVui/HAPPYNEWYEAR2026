@@ -16,7 +16,7 @@
     "pass": "07102002",
     "role": "guest",
     "exts": ["jpg", "png", "webp", "jpeg"],
-    "firstWish": "Cảm  ơn bạn iu đã ở bên mình nhiều năm qua, cảm ơn bà  đã chịu đựng sự khùng điên  của tôi cảm ơn  đã không  bỏ rơi khi  tôi khó khăn nhất kkk cũm chưa biết phải khó khăn nhất không...Chúc bà lun vui vẻ hạnh phúc tốt nghiệp thạc sĩ  kiếm nhiều tiền dẫn tôi đi MỸ.   NHỚ THƯƠNG TÔI NHIỀU HƠN"
+    "firstWish": "Cảm  ơn bạn iu đã ở bên mình nhiều năm qua, cảm ơn bà  đã chịu đựng sự khùng điên  của tôi cảm ơn  đã không  bỏ rơi khi  tôi khó khăn nhất kkk cũm chưa biết phải khó khăn nhất không...Chúc bà lun vui vẻ hạnh phúc tốt nghiệp thạc sĩ  kiếm nhiều tiền dẫn tôi đi MỸ.KKK cũm không biết chúc gì nhiều.Chúc bà năm mới hạnh phúc mau có người iu nữa nhé. Phải giàu giàu giàu nhé.NHỚ THƯƠNG TÔI NHIỀU HƠN"
   },
     {
     "key": "ethereal",
@@ -24,7 +24,7 @@
     "pass": "29092003",
     "role": "guest",
     "exts": ["jpg", "png", "webp", "jpeg"],
-    "firstWish": "Chúc cậu lun vui vẻ hạnh phúc nhé🤩. Mong năm nay cậu tốt nghiệp thành công rực  rỡ . Mong mọi việc cậu mong đều thành công và thuận lợi. Ùmmm những gì mà mình muốn nói chắc cậu đã xem qua hết rồi kkk. Mình rất thích một câu nói \"Tôi cho bạn biết tôi thích bạn không  hẳn là muốn ở bên cạnh bạn,chỉ là mong rằng sau này bạn khi gặp thăng trầm của cuộc đời thì đừng nản chí, bởi ít nhất đã có một người bị sức hút của bạn mà hấp dẫn. Trước đây như thế ,về sau cũng như vậy\" Mong cậu lun tự tin, xinh đẹp và tỏa sáng nhé...Lời cuối thấy hoa nở là tốt rồi nên cậu ở bên ai cũng được, cậu vui là mình yên lòng rồi💕. Nói xàm đủ rồi nhó bấm đổi lời chúc để nhận nhiều lời chúc hay nhé 😂😎"
+    "firstWish": "Chúc cậu lun vui vẻ hạnh phúc nhé🤩. Mong năm nay cậu tốt nghiệp thành công rực  rỡ . Mong mọi việc cậu mong đều thành công và thuận lợi. Mong cậu lun tự tin, xinh đẹp, rạng rỡ. Chúc cậu tìm được người iu thương mình thật nhiều 💕"  
   },
   {
     "key": "tramkelly",
@@ -32,7 +32,7 @@
     "pass": "23032001",
     "role": "guest",
     "exts": ["jpg", "png", "webp", "jpeg"],
-    "firstWish": "💼 Chúc chị tìm được công việc tốt nhiều tiền, lun lun xinh đẹp như giờ nha.Chúc chị lun hạnh phúc và tìm được người iu thương nha...vẫn câu nói đó nghe chửi thì vui nhưng đừng khó tính với em quáaa...hihihihi!"
+    "firstWish": "💼 Chúc chị tìm được công việc tốt nhiều tiền, lun lun xinh đẹp như giờ nha.Chúc chị lun hạnh phúc và tìm được người iu thương nha...vẫn câu nói đó nghe chửi thì vui nhưng đừng khó tính với em quáaa...hihihihi!. EM bị bí câu chúc đó :) nên thông cảm nho kkk. LUN XINH ĐẸP NHÉ!!"
   },
   {
     "key": "baisau",
@@ -48,7 +48,7 @@
     "pass": "02032002",
     "role": "guest",
     "exts": ["jpg", "png", "webp", "jpeg"],
-    "firstWish": "Mau mau cưới lẹ dùm tao đi nhanh lên quá lâu rồi. Hạnh phúc nhiều tiền có tiềntiền mở shop cho t thẻ VIP giảm 50% nhóa"
+    "firstWish": "Mau mau cưới lẹ dùm tao đi nhanh lên quá lâu rồi. Hạnh phúc nhiều tiền có tiền tiền mở shop cho t thẻ VIP giảm 50% nhóa. Chúc mày lun xinh đẹp buôn bán lun đắt khách nhé. Mong m  và gia đình lun lun hạnh phúc và vui vẻ nhé"
   },
   {
     "key": "nguyenthu",
@@ -96,13 +96,6 @@
     "role": "guest",
     "exts": ["jpg", "png", "webp", "jpeg"],
      "firstWish": " Khóa luận được A+ nhé cố lên nè!!. Lun xinh đẹp và vui vẻ như giờ nha, kkk không biết sao còn chơi mà coi như còn duyên đi. Thương chị mày nhiều hơn nhé kkk"
-  },
-  {
-    "key": "khách",
-    "label": "khách",
-    "pass": "123",
-    "role": "guest",
-    "exts": ["jpg", "png", "webp", "jpeg"]
   },
   {
     "key": "chidep",
@@ -159,6 +152,34 @@
     "key": "giaquy",
     "label": "Gia Quý",
     "pass": "26092002",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"]
+  },
+  {
+    "key": "khách",
+    "label": "khách",
+    "pass": "123",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"]
+  },
+  {
+    "key": "khách2",
+    "label": "khách2",
+    "pass": "123",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"]
+  },
+  {
+    "key": "khách3",
+    "label": "khách3",
+    "pass": "123",
+    "role": "guest",
+    "exts": ["jpg", "png", "webp", "jpeg"]
+  },
+  {
+    "key": "khách4",
+    "label": "khách4",
+    "pass": "123",
     "role": "guest",
     "exts": ["jpg", "png", "webp", "jpeg"]
   }
