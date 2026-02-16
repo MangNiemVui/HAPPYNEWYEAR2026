@@ -103,8 +103,8 @@ async function recordFortune({ viewerKey, viewerLabel, amount, bankName, bankAcc
   try {
     await addDoc(collection(db, "fortunes"), {
       ownerKey: window.OWNER_KEY || "",
-      viewerKey,
-      viewerLabel,
+      viewerKey: String(viewerKey || ""),
+      viewerLabel: String(viewerLabel || ""),
       amount: Number(amount || 0),
       bankName: String(bankName || ""),
       bankAccount: String(bankAccount || ""),
@@ -117,6 +117,9 @@ async function recordFortune({ viewerKey, viewerLabel, amount, bankName, bankAcc
   }
 }
 
+/* =========================
+   REPLAY: Owner cấp / user nhận
+   ========================= */
 async function grantReplay(viewerKey) {
   await initFirebaseIfNeeded();
   if (!isOwnerAuthed()) throw new Error("Not owner authed");
@@ -130,7 +133,7 @@ async function grantReplay(viewerKey) {
     viewerKey: k,
     allow: true,
     createdAt: serverTimestamp()
-  });
+  }, { merge: true });
 }
 
 async function consumeReplay(viewerKey) {
@@ -155,6 +158,9 @@ async function consumeReplay(viewerKey) {
   }
 }
 
+/* =========================
+   OWNER DASHBOARD: load list
+   ========================= */
 async function getLatestViews(n = 200) {
   await initFirebaseIfNeeded();
   if (!isOwnerAuthed()) throw new Error("Not owner authed");
@@ -197,7 +203,9 @@ async function getLatestFortunes(n = 200) {
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
-// ✅ Owner delete
+/* =========================
+   OWNER DELETE
+   ========================= */
 async function deleteView(docId) {
   await initFirebaseIfNeeded();
   if (!isOwnerAuthed()) throw new Error("Not owner authed");
@@ -209,8 +217,6 @@ async function deleteWish(docId) {
   await initFirebaseIfNeeded();
   if (!isOwnerAuthed()) throw new Error("Not owner authed");
   if (!docId) throw new Error("Missing docId");
-
-  // ✅ FIX: bỏ \" ... \" -> dùng "..." bình thường
   await deleteDoc(doc(db, "wishes", String(docId)));
 }
 
@@ -221,7 +227,9 @@ async function deleteFortune(docId) {
   await deleteDoc(doc(db, "fortunes", String(docId)));
 }
 
-// ✅ helper: init EmailJS compatible mọi version
+/* =========================
+   EMAILJS helper
+   ========================= */
 function emailjsInitSafe(EJ, publicKey) {
   const pk = String(publicKey || "").trim();
   if (!pk) return;
@@ -229,20 +237,61 @@ function emailjsInitSafe(EJ, publicKey) {
   try { EJ.init(pk); return; } catch (e) {}
 }
 
-async function sendWish({ viewerKey, viewerLabel, targetKey, targetLabel, message }) {
+/* =========================
+   SEND WISH: gửi mail kèm bank + stk + tiền
+   ========================= */
+async function sendWish({
+  viewerKey,
+  viewerLabel,
+  targetKey,
+  targetLabel,
+  message,
+  fortuneAmount,
+  bankName,
+  bankAccount
+}) {
   await initFirebaseIfNeeded();
+
   let savedToFirestore = false;
   let emailed = false;
 
-  // 1) Save to Firestore (fail cũng không chặn gửi mail)
+  const vKey = String(viewerKey || "");
+  const vLabel = String(viewerLabel || "");
+  const tKey = String(targetKey || "");
+  const tLabel = String(targetLabel || "");
+  const msg = String(message || "");
+
+  const amountNum = Number(fortuneAmount || 0);
+  const bName = String(bankName || "");
+  const bAcc = String(bankAccount || "");
+
+  // ✅ gộp thông tin để email/template nào cũng hiện
+  const extra = [
+    `--- THÔNG TIN NHẬN LỘC ---`,
+    `Người chơi: ${vLabel || vKey || ""} (${vKey || ""})`,
+    `Trúng: ${amountNum.toLocaleString("vi-VN")}đ`,
+    `Ngân hàng: ${bName}`,
+    `STK: ${bAcc}`,
+    `Người được chúc: ${tLabel || tKey || ""}`,
+  ].join("\n");
+
+  const mergedMessage = `${msg}\n\n${extra}`;
+
+  // 1) Save to Firestore (lưu luôn bank + tiền để owner xem lại)
   try {
     await addDoc(collection(db, "wishes"), {
       ownerKey: window.OWNER_KEY || "",
-      viewerKey,
-      viewerLabel,
-      targetKey,
-      targetLabel,
-      message,
+      viewerKey: vKey,
+      viewerLabel: vLabel,
+      targetKey: tKey,
+      targetLabel: tLabel,
+      message: msg,
+
+      // ✅ new fields
+      fortuneAmount: amountNum,
+      bankName: bName,
+      bankAccount: bAcc,
+
       createdAt: serverTimestamp()
     });
     savedToFirestore = true;
@@ -250,7 +299,7 @@ async function sendWish({ viewerKey, viewerLabel, targetKey, targetLabel, messag
     console.warn("Firestore addDoc failed => still try EmailJS:", e);
   }
 
-  // 2) Try EmailJS
+  // 2) Send EmailJS
   try {
     const EJ =
       (window.emailjs && window.emailjs.default && typeof window.emailjs.default.send === "function")
@@ -270,11 +319,19 @@ async function sendWish({ viewerKey, viewerLabel, targetKey, targetLabel, messag
     const templateId = String(window.EMAILJS_TEMPLATE_ID || "template_zpr88bw").trim();
 
     await EJ.send(serviceId, templateId, {
-      from_name: viewerLabel || viewerKey || "Ẩn danh",
-      from_key: viewerKey || "",
-      card_target: targetLabel || targetKey || "",
+      from_name: vLabel || vKey || "Ẩn danh",
+      from_key: vKey,
+      card_target: tLabel || tKey,
       time: new Date().toLocaleString("vi-VN"),
-      message: message || "",
+
+      // ✅ quan trọng: message đã gộp đủ info
+      message: mergedMessage,
+
+      // ✅ nếu template bạn có field thì vẫn dùng được
+      fortune_amount: amountNum,
+      bank_name: bName,
+      bank_account: bAcc,
+
       to_email: "phanthu27112002@gmail.com",
     });
 
