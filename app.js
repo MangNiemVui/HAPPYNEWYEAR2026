@@ -43,7 +43,6 @@ function formatMoneyVND(amount){
 }
 
 // ===== Countdown (Tết 2026) =====
-// Tết 2026: 2026-02-17 00:00:00 (GMT+7)
 const TET_TARGET_MS = new Date('2026-02-17T00:00:00+07:00').getTime();
 
 function initCountdown(){
@@ -136,11 +135,11 @@ let autoFire = true;
 let autoTimer = 0;
 
 const COLOR_POOL = [
-  'rgba(255,204,77,0.95)',  // gold
-  'rgba(255,231,153,0.95)', // pale gold
-  'rgba(255,255,255,0.95)', // white
-  'rgba(255,90,120,0.95)',  // pink/red
-  'rgba(180,0,24,0.95)'     // wine red
+  'rgba(255,204,77,0.95)',
+  'rgba(255,231,153,0.95)',
+  'rgba(255,255,255,0.95)',
+  'rgba(255,90,120,0.95)',
+  'rgba(180,0,24,0.95)'
 ];
 
 function resizeFx(){
@@ -171,8 +170,7 @@ function burst(x, y, count = 110){
 
     particles.push({
       x, y,
-      vx,
-      vy,
+      vx, vy,
       g: 0.06 + Math.random() * 0.08,
       life: 0,
       maxLife: 38 + Math.random() * 26,
@@ -185,7 +183,6 @@ function burst(x, y, count = 110){
 function stepFx(){
   if (!ctx) return;
 
-  // fade with “đỏ đô” tint (không đen)
   ctx.fillStyle = 'rgba(43,0,8,0.18)';
   ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
@@ -213,7 +210,6 @@ function stepFx(){
 
   particles = next;
 
-  // auto bursts
   if (autoFire){
     autoTimer += 1;
     if (autoTimer % 55 === 0){
@@ -227,10 +223,7 @@ function stepFx(){
 }
 
 window.addEventListener('resize', () => { resizeFx(); initPetals(); });
-window.addEventListener('pointerdown', (e) => {
-  // chạm/click bắn pháo hoa
-  burst(e.clientX, e.clientY, 120);
-});
+window.addEventListener('pointerdown', (e) => { burst(e.clientX, e.clientY, 120); });
 
 // ===== Music =====
 const music = $('music');
@@ -264,21 +257,17 @@ async function loadPlaylist(){
     const res = await fetch('./music/playlist.json', { cache: 'no-store' });
     if (!res.ok) throw new Error('Cannot load music/playlist.json');
     PLAYLIST = await res.json();
-
     if (!Array.isArray(PLAYLIST) || !PLAYLIST.length) throw new Error('playlist.json trống');
 
     if (musicSelect){
       musicSelect.innerHTML = PLAYLIST.map((t, i) => `<option value="${i}">${escapeHtml(t.title)}</option>`).join('');
     }
-
     trackIndex = 0;
     setTrack(0, false);
   }catch(e){
     console.warn(e);
     PLAYLIST = [];
-    if (musicSelect){
-      musicSelect.innerHTML = `<option value="">(Không có nhạc)</option>`;
-    }
+    if (musicSelect) musicSelect.innerHTML = `<option value="">(Không có nhạc)</option>`;
     setMusicButton(false, '❗ Chưa có nhạc');
   }
 }
@@ -336,12 +325,10 @@ async function toggleMusic(){
 btnMusic?.addEventListener('click', toggleMusic);
 btnPrev?.addEventListener('click', () => setTrack(trackIndex - 1, true));
 btnNext?.addEventListener('click', () => setTrack(trackIndex + 1, true));
-
 musicSelect?.addEventListener('change', (e) => {
   const i = parseInt(e.target.value, 10);
   if (!Number.isNaN(i)) setTrack(i, true);
 });
-
 tapAudio?.addEventListener('click', async () => {
   const ok = await tryPlayFromGesture();
   if (ok) burst(window.innerWidth * 0.5, window.innerHeight * 0.25, 120);
@@ -364,7 +351,7 @@ const search = $('search');
 const pass = $('pass');
 const btnUnlock = $('btnUnlock');
 const btnOwnerView = $('btnOwnerView');
-const btnOwnerReplay = $('btnOwnerReplay');
+const btnOwnerReplay = $('btnOwnerReplay'); // sẽ ẩn
 const btnHint = $('btnHint');
 const btnLogout = $('btnLogout');
 
@@ -409,7 +396,7 @@ yearInput.addEventListener('input', () => {
 });
 
 // ===== Wishes data (GIỮ NGUYÊN) =====
-const GLOBAL_WISHES = [
+const GLOBAL_WISHES = [ /* ... giữ nguyên mảng của bạn ... */ 
   "Chúc {name} năm {year} luôn bình an và được yêu thương thật nhiều 💖",
   "May {year} bring you calm days and bright nights, {name}. ✨",
   "{year}년에는 {name}님에게 행복이 가득하길 바라요 🌸",
@@ -424,21 +411,13 @@ const GLOBAL_WISHES = [
   "{name}님, {year}년엔 좋은 사람들과 좋은 일만 가득하길 🫶",
   "Chúc {name} {year} mọi deadline đều qua nhẹ như lông hồng ⏳🪽",
   "In {year}, may you feel proud of yourself more often, {name}. 🌈",
-  "{year}년, {name}님에게 좋은 기회가 꼭 오길 ✨",
-  "Chúc {name} {year} gặp đúng người, đúng việc, đúng thời điểm 🎯",
-  "May your dreams feel closer in {year}, {name}. 🌙",
-  "{name}님, {year}년엔 웃는 날이 더 많아지길 😊",
-  "Năm {year} chúc {name} mọi chuyện khó rồi sẽ hóa dễ 🌈",
-  "Wishing you confidence and courage in {year}, {name}. 💪",
-  "{year}년에도 {name}님이 원하는 걸 당당히 선택하길 🌟",
-  "Chúc {name} năm {year} ngủ ngon, ăn ngon, sống chill hết nấc 🌙🍜",
-  "May {year} bring you peace of mind, {name}. 🧘",
-  "{name}님, {year}년엔 마음의 여유가 생기길 ☁️",
-  "Năm {year} chúc {name} sống nhẹ nhàng mà vẫn rực rỡ 🌸🌟",
-  "Wishing {name} a {year} full of warm memories. 📸",
-  "{year}년, {name}님에게 따뜻한 순간이 많이 남길 💛",
-  "Chúc {name} {year} luôn tự tin, mạnh mẽ và được trân trọng 💗",
-  "May {year} surprise you with happiness, {name}. 🎉"
+  "{year}년에도 {name}님이 원하는 길로 쭉 나아가길 🚀",
+  "Năm {year} chúc {name} đi đâu cũng gặp điều lành, về đâu cũng thấy yên 🏡✨",
+  "May {year} be kind to you, {name}. 🤍",
+  "{name}님, {year}년엔 마음이 늘 편안하길 🌿",
+  "Chúc {name} năm {year} rực rỡ theo cách của riêng mình 🌟",
+  "Wishing {name} a {year} filled with love, laughter, and peace. 🕊️",
+  "Năm {year} chúc {name} may mắn tới tấp, niềm vui ngập tràn 🎉"
 ];
 
 // ===== People + session =====
@@ -447,9 +426,6 @@ let selectedPerson = null;
 let lastWishIndex = -1;
 let session = { loggedIn:false, viewer:null, target:null };
 const firstWishShown = new Set();
-
-// ✅ key lưu “lộc mới nhất” theo viewer
-const LAST_FORTUNE_PREFIX = 'hpny2026_lastFortune_';
 
 function setStatus(msg, bad=false){
   if (!statusEl) return;
@@ -468,7 +444,7 @@ function isOwnerRole(){
   return !!(session.loggedIn && session.viewer && session.viewer.role === 'owner');
 }
 
-// ===== Special: AQ vẫn được quay rút thưởng (kể cả đã trúng nhẫn) =====
+// ===== Special: AQ vẫn được quay rút thưởng =====
 function isAQ(person){
   const k = removeDiacritics(person?.key || '');
   const l = removeDiacritics(person?.label || '');
@@ -487,34 +463,18 @@ function canRepeatMiniGame(person){
   return isOwnerRole() || isAQ(person);
 }
 
-// ===== HƯỚNG A: lock game local =====
-function playKey(){
-  return String(session?.viewer?.key || '');
-}
+// ===== Unlock keys =====
+function playKey(){ return String(session?.viewer?.key || ''); }
 function keyUnlocked(k){ return 'hpny2026_unlocked_' + k; }
-function keyPlayed(k){ return 'hpny2026_played_' + k; }
-function keyOwnerReplay(k){ return 'hpny2026_owner_replay_' + k; }
-
 function isUnlocked(k){ return localStorage.getItem(keyUnlocked(k)) === '1'; }
-function hasPlayed(k){ return localStorage.getItem(keyPlayed(k)) === '1'; }
-function markPlayed(k){ if (k) localStorage.setItem(keyPlayed(k), '1'); }
-
-function consumeReplay(k){
-  if (!k) return;
-  if (localStorage.getItem(keyOwnerReplay(k)) === '1'){
-    localStorage.removeItem(keyOwnerReplay(k));
-    localStorage.removeItem(keyPlayed(k));
-  }
-}
 
 function refreshGameLockUI(){
   const k = playKey();
   const owner = isOwnerRole();
   const unlocked = owner || (k && isUnlocked(k));
-  const repeat = canRepeatMiniGame(session.viewer);
-  const played = k && hasPlayed(k);
 
-  const canOpen = unlocked && (repeat || !played);
+  // ✅ bỏ giới hạn chơi 1 lần => chỉ cần unlocked là chơi được
+  const canOpen = !!unlocked;
 
   if (btnOpenLuck){
     btnOpenLuck.disabled = !canOpen;
@@ -522,14 +482,12 @@ function refreshGameLockUI(){
   }
 
   if (gameLockHintTop){
-    // hiện hint nếu đã login nhưng chưa unlock
     const show = session.loggedIn && !owner && k && !isUnlocked(k);
     gameLockHintTop.style.display = show ? '' : 'none';
   }
 
-  if (btnOwnerReplay){
-    btnOwnerReplay.disabled = !(owner && session.loggedIn && selectedPerson);
-  }
+  // Ẩn nút owner replay (giờ không cần)
+  btnOwnerReplay?.classList.add('hidden');
 }
 
 function setUnlockedForCurrentViewer(){
@@ -552,6 +510,8 @@ function updateOwnerUI(){
   btnOwnerLogin?.classList.toggle('hidden', !ownerRole || authed);
   btnOwnerLogout?.classList.toggle('hidden', !ownerRole || !authed);
   btnOwnerDashboard?.classList.toggle('hidden', !ownerRole || !authed);
+
+  btnOwnerReplay?.classList.add('hidden'); // ✅ luôn ẩn
 
   refreshGameLockUI();
 }
@@ -633,6 +593,7 @@ async function renderOwnerTab(){
         window.AppServices.getLatestWishes(200),
         window.AppServices.getLatestFortunes ? window.AppServices.getLatestFortunes(200) : Promise.resolve([])
       ]);
+
       const ownerKey = window.OWNER_KEY || '';
       const wishes = wishList.filter(w => (w.ownerKey||'') === ownerKey);
       const fortunes = (fortuneList || []).filter(f => (f.ownerKey||'') === ownerKey);
@@ -660,7 +621,6 @@ async function renderOwnerTab(){
         </div>
       ` : '';
 
-      // ✅ UPDATED: wishes hiển thị luôn lộc + bank + stk nếu có (do services.js mới lưu)
       const wishesHtml = wishes.length ? wishes.map(w => `
         <div class="ownerRow">
           <div class="ownerMeta">
@@ -668,14 +628,6 @@ async function renderOwnerTab(){
             gửi khi đang xem thiệp: <b>${escapeHtml(w.targetLabel || w.targetKey || '')}</b>
             • ${escapeHtml(fmtTime(w.createdAt))}
           </div>
-
-          ${(w.bankName || w.bankAccount || w.fortuneAmount) ? `
-            <div class="ownerMeta">
-              🧧 Lộc: <b>${escapeHtml(formatMoneyVND(w.fortuneAmount || 0))}</b>
-              ${(w.bankName || w.bankAccount) ? ` • 🏦 ${escapeHtml(w.bankName || '')} • ${escapeHtml(w.bankAccount || '')}` : ``}
-            </div>
-          ` : ``}
-
           <div style="white-space:pre-wrap">${escapeHtml(w.message || '')}</div>
           <div class="row" style="justify-content:flex-end">
             <button class="btnSecondary" type="button" data-del-wish="${escapeHtml(w.id)}">🗑 Xoá</button>
@@ -830,9 +782,7 @@ function openMenu(){
   setTimeout(() => search?.focus(), 0);
 }
 
-function closeMenu(){
-  menu?.classList.add('hidden');
-}
+function closeMenu(){ menu?.classList.add('hidden'); }
 
 function renderMenu(q){
   const query = (q || '').trim().toLowerCase();
@@ -885,7 +835,6 @@ menuList?.addEventListener('click', (e) => {
   const key = item.getAttribute('data-key');
   if (key) pickPersonByKey(key);
 });
-
 document.addEventListener('click', (e) => {
   if (!selectWrap || !menu) return;
   if (!selectWrap.contains(e.target)) closeMenu();
@@ -971,13 +920,6 @@ function applySessionUI(){
   if (btnSendWish) btnSendWish.disabled = false;
   if (wishMsg) wishMsg.disabled = false;
 
-  // ✅ restore last fortune nếu có (để gửi mail không bị 0)
-  try{
-    const vk = playKey();
-    const raw = localStorage.getItem(LAST_FORTUNE_PREFIX + vk);
-    if (raw) window.__lastFortune = JSON.parse(raw);
-  }catch(e){}
-
   try{ window.AppServices?.startView?.(session.viewer, session.target); }catch{}
   updateOwnerUI();
 
@@ -1015,12 +957,10 @@ btnOwnerView?.addEventListener('click', () => {
 });
 
 btnLogout?.addEventListener('click', () => lockCard('👋 Đã đăng xuất.'));
-
 btnHint?.addEventListener('click', () => {
   if (!selectedPerson) return alert('Bạn hãy chọn người trước đã.');
   alert(`🔑 Mật khẩu của ${selectedPerson.label} (@${selectedPerson.key}) là: ${selectedPerson.pass}`);
 });
-
 btnWish?.addEventListener('click', showRandomWish);
 
 // ===== Owner Login/Logout/Dashboard =====
@@ -1056,14 +996,14 @@ function showSuccessPage(){
   successPage?.classList.remove('hidden');
   burst(window.innerWidth * 0.5, window.innerHeight * 0.28, 160);
 }
-function hideSuccessPage(){
-  successPage?.classList.add('hidden');
-}
-
+function hideSuccessPage(){ successPage?.classList.add('hidden'); }
 btnSuccessClose?.addEventListener('click', hideSuccessPage);
 successPage?.addEventListener('click', (e) => { if (e.target === successPage) hideSuccessPage(); });
 
-// ===== Send wish: gửi xong -> unlock game + hiện “Nhận lộc” =====
+// ===== Wish send =====
+// ✅ NÚT GỬI LỜI CHÚC: chỉ LƯU + unlock, KHÔNG gửi email
+let PENDING_WISH_MESSAGE = ""; // lưu lời chúc để gửi mail ở cuối
+
 btnSendWish?.addEventListener('click', async () => {
   const message = (wishMsg?.value || '').trim();
   if (!message){
@@ -1075,15 +1015,8 @@ btnSendWish?.addEventListener('click', async () => {
     btnSendWish.disabled = true;
     await ensureServices();
 
-    // ✅ lấy “lộc mới nhất” để gửi kèm Gmail
-    let f = window.__lastFortune || null;
-    if (!f){
-      try{
-        const vk = playKey();
-        const raw = localStorage.getItem(LAST_FORTUNE_PREFIX + vk);
-        if (raw) f = JSON.parse(raw);
-      }catch(e){}
-    }
+    // ✅ lưu lại để lát gửi mail kèm nhận lộc
+    PENDING_WISH_MESSAGE = message;
 
     const result = await window.AppServices.sendWish({
       viewerKey: session.viewer?.key || '',
@@ -1091,31 +1024,24 @@ btnSendWish?.addEventListener('click', async () => {
       targetKey: session.target?.key || '',
       targetLabel: session.target?.label || '',
       message,
-
-      // ✅ NEW: gửi kèm info nhận lộc về Gmail + lưu Firestore wishes
-      fortuneAmount: Number(f?.amount || 0),
-      bankName: String(f?.bankName || ''),
-      bankAccount: String(f?.bankAccount || '')
+      sendEmail: false // ✅ KHÔNG gửi Gmail ở bước này
     });
 
-    if (result && (result.savedToFirestore || result.emailed)){
+    if (result && result.savedToFirestore){
       if (wishMsg) wishMsg.value = '';
 
-      // ✅ unlock local
       setUnlockedForCurrentViewer();
-
-      // ✅ show success
       showSuccessPage();
 
-      setStatus('✅ Đã gửi lời chúc! “Nhận lộc” đã được mở khóa 🎁', false);
+      setStatus('✅ Đã lưu lời chúc! “Nhận lộc” đã được mở khóa 🎁', false);
     }else{
-      setStatus('⚠️ Gửi lời chúc chưa thành công (Firestore/EmailJS đều thất bại).', true);
-      alert('⚠️ Gửi lời chúc chưa thành công.\nHãy kiểm tra Firestore Rules / EmailJS cấu hình.');
+      setStatus('⚠️ Lưu lời chúc chưa thành công (Firestore fail).', true);
+      alert('⚠️ Lưu lời chúc chưa thành công.\nHãy kiểm tra Firestore Rules.');
     }
   }catch(e){
     console.warn(e);
-    setStatus('❌ Không gửi được lời chúc. Kiểm tra cấu hình Firestore/EmailJS.', true);
-    alert('❌ Không gửi được lời chúc.\n' + (e.message || e));
+    setStatus('❌ Không lưu được lời chúc. Kiểm tra cấu hình Firestore.', true);
+    alert('❌ Không lưu được lời chúc.\n' + (e.message || e));
   }finally{
     btnSendWish.disabled = false;
   }
@@ -1179,7 +1105,6 @@ function showFlow(){
   flow.classList.remove('hidden');
   flowState.active = true;
 }
-
 function hideFlow(){
   if (!flow) return;
   flow.classList.add('hidden');
@@ -1198,7 +1123,6 @@ function loadBankInfoFor(person){
     return JSON.parse(raw);
   }catch{ return null; }
 }
-
 function saveBankInfoFor(person, payload){
   try{
     localStorage.setItem(BANK_STORAGE_PREFIX + (person?.key || ''), JSON.stringify(payload));
@@ -1264,11 +1188,9 @@ function spinWheelToIndex(idx){
   });
 }
 
-function getWheelOutcomeFor(person, spinCount){
-  // 🎯 Luật mới:
+function getWheelOutcomeFor(person){
   // - Chỉ Hồng Nhung trúng NHẪN
   // - Không ai trúng VÒNG TAY
-  // - Người khác: luôn "Chúc may mắn"
   if (isHongNhung(person)) return 'ring';
   return 'none';
 }
@@ -1277,37 +1199,16 @@ function getWheelOutcomeFor(person, spinCount){
 const FORTUNE_MESSAGES = {
   50000: [
     '{name} ơi, lộc nhỏ nhưng vui to – năm {year} cười nhiều hơn lo! 😊',
-    'Năm {year} chúc {name} đi đâu cũng gặp quý nhân, về nhà cũng gặp bình yên 🌿',
-    '{name} nhận lộc 50k – chúc {year} mọi việc “trơn tru” như mứt dừa 😄',
-    'Chúc {name} năm {year} sức khỏe dồi dào, tinh thần vững vàng, tiền vô đều đều 💪',
-    '{year} này, {name} cứ mạnh dạn tỏa sáng – bạn làm được mà! ✨',
-    'Lộc 50k gửi {name} – chúc mọi điều khó sẽ hóa dễ, mọi điều xa sẽ hóa gần 🌸',
-    '{name} nhận lộc – chúc {year} ngủ ngon, ăn ngon, sống chill hết nấc 🌙',
     '{year} chúc {name} gặp đúng người, đúng việc, đúng thời điểm 🎯',
-    '{name} ơi, lộc tới rồi: chúc {year} bình an là chính, vui vẻ là nhất 🕊️',
-    'Chúc {name} năm {year} làm đâu thắng đó, thuận lợi đủ đường 🚀',
-    '{name} nhận lộc – chúc {year} luôn được yêu thương đúng cách 💖',
-    '{year} này chúc {name} có thêm nhiều khoảnh khắc ấm áp và đáng nhớ 📸',
     'Lộc nhỏ đầu năm: chúc {name} {year} nhẹ nhàng mà rực rỡ 🌟',
-  ],
-  100000: [
-    '{name} nhận lộc 100k – chúc {year} công việc hanh thông, lương thưởng tăng đều 💼📈',
-    '{year} này, {name} cứ từ tốn mà tiến – thành công sẽ đến đúng lúc 🌿',
-    'Lộc 100k gửi {name}: chúc bạn luôn có động lực và niềm vui mỗi ngày 😊',
-  ],
-  150000: [
-    '{name} nhận lộc 150k – chúc {year} bứt phá nhẹ nhàng nhưng chắc chắn 💥',
-    'Lộc 150k: chúc {name} {year} gặp nhiều cơ hội tốt và nắm bắt thật nhanh ✨',
   ],
   200000: [
     '{name} nhận lộc 200k – chúc {year} tiền vào như nước, niềm vui ngập tràn 🎉💰',
     'Lộc 200k gửi {name}: chúc {year} mọi điều như ý, an yên và đủ đầy 🤍',
-    '{year} chúc {name} bước qua mọi thử thách thật đẹp, thật vững vàng 💪',
   ],
   500000: [
     '{name} nhận lộc 500k – chúc năm {year} bùng nổ tài lộc, làm đâu thắng đó 💥💰',
     'Lộc 500k gửi {name}: chúc {year} phát tài phát lộc, mọi việc hanh thông 🎉',
-    '{year} chúc {name} tiền vô như nước, vui vẻ như Tết, bình an quanh năm 🧧'
   ]
 };
 
@@ -1315,13 +1216,8 @@ function getFortuneAmountFor(person){
   const l = removeDiacritics(person?.label || '');
   const k = removeDiacritics(person?.key || '');
 
-  // ✅ AQ nhận 500k
   if (k === 'ethereal' || k === 'aq' || l === 'aq' || l.includes('anh quynh')) return 500000;
-
-  // ✅ "chị gái gia trưởng" nhận 200k
   if (l.includes('gia truong')) return 200000;
-
-  // 👥 còn lại: 50k
   return 50000;
 }
 
@@ -1358,7 +1254,6 @@ function startFlowFor(person){
     fortuneDone: false,
   };
 
-  // Prefill bank
   const bank = loadBankInfoFor(person);
   if (bankName) bankName.value = bank?.bankName || '';
   if (bankAccount) bankAccount.value = bank?.bankAccount || '';
@@ -1374,13 +1269,11 @@ function startFlowFor(person){
 async function handleSpin(){
   if (!btnSpin || btnSpin.disabled) return;
 
-  // Nếu quay lại lần 2, reset UI trước
   resetWheelUI();
-
   btnSpin.disabled = true;
 
   const person = flowState.person;
-  const outcome = getWheelOutcomeFor(person, flowState.wheelSpins);
+  const outcome = getWheelOutcomeFor(person);
   const idx = pickSegmentIndexForOutcome(outcome);
 
   await spinWheelToIndex(idx);
@@ -1395,7 +1288,7 @@ async function handleSpin(){
 
   btnWheelNext?.classList.remove('hidden');
 
-  // ✅ AQ (và Owner) vẫn được quay tiếp dù đã trúng nhẫn
+  // AQ/Owner có thể quay tiếp nếu muốn
   if (canRepeatMiniGame(session.viewer)){
     btnSpin.disabled = false;
   }
@@ -1407,7 +1300,6 @@ btnIntroStart?.addEventListener('click', () => {
   showStage(stageBank);
   bankNote && (bankNote.textContent = 'Sau khi xác nhận bạn sẽ được chơi vòng quay may mắn 🎡');
 });
-
 btnBankBack?.addEventListener('click', () => showStage(stageIntro));
 
 btnBankConfirm?.addEventListener('click', () => {
@@ -1420,14 +1312,11 @@ btnBankConfirm?.addEventListener('click', () => {
     return;
   }
 
-  // Save local
   saveBankInfoFor(flowState.person, { bankName: bn, bankAccount: ba });
   flowState.bankConfirmed = true;
 
-  // go wheel
   resetWheelUI();
   showStage(stageWheel);
-
   burst(window.innerWidth*0.5, window.innerHeight*0.25, 120);
 });
 
@@ -1441,6 +1330,9 @@ btnWheelNext?.addEventListener('click', () => {
 });
 
 btnFortuneBack?.addEventListener('click', () => showStage(stageWheel));
+
+// giữ kết quả fortune để email ở cuối
+let LAST_FORTUNE = { amount: 0, bankName: "", bankAccount: "" };
 
 btnShake?.addEventListener('click', async () => {
   if (flowState.fortuneDone) return;
@@ -1456,23 +1348,19 @@ btnShake?.addEventListener('click', async () => {
 
   const bn = (bankName?.value || '').trim();
   const ba = (bankAccount?.value || '').trim();
+
+  LAST_FORTUNE = { amount: f.amount, bankName: bn, bankAccount: ba };
+
   if (fortuneMeta){
     fortuneMeta.textContent = (bn && ba)
       ? `📩 Đã ghi nhớ: ${bn} • ${ba} • ${new Date().toLocaleString('vi-VN')}`
       : `${new Date().toLocaleString('vi-VN')}`;
   }
 
-  // ✅ LƯU “lộc mới nhất” để gửi kèm Gmail khi gửi lời chúc
-  window.__lastFortune = { amount: Number(f.amount || 0), bankName: bn, bankAccount: ba };
-  try{
-    const vk = playKey();
-    if (vk) localStorage.setItem(LAST_FORTUNE_PREFIX + vk, JSON.stringify(window.__lastFortune));
-  }catch(e){}
-
   flowState.fortuneDone = true;
   btnFinish?.classList.remove('hidden');
 
-  // Lưu lịch sử bóc quẻ để Owner xem được ai trúng bao nhiêu
+  // lưu lịch sử bóc quẻ để owner xem
   try{
     await ensureServices();
     await window.AppServices?.recordFortune?.({
@@ -1489,7 +1377,31 @@ btnShake?.addEventListener('click', async () => {
   burst(window.innerWidth*0.5, window.innerHeight*0.26, 160);
 });
 
-btnFinish?.addEventListener('click', () => {
+// ✅ NÚT CUỐI: “Nhận thiệp” -> lúc này mới gửi Gmail kèm thông tin nhận lộc + lời chúc
+btnFinish?.addEventListener('click', async () => {
+  try{
+    // chỉ gửi mail nếu có lời chúc đã lưu trước đó
+    const msg = (PENDING_WISH_MESSAGE || "").trim();
+    if (msg){
+      await ensureServices();
+      await window.AppServices.sendWish({
+        viewerKey: session.viewer?.key || '',
+        viewerLabel: session.viewer?.label || '',
+        targetKey: session.target?.key || '',
+        targetLabel: session.target?.label || '',
+        message: msg,
+        fortuneAmount: LAST_FORTUNE.amount || 0,
+        bankName: LAST_FORTUNE.bankName || "",
+        bankAccount: LAST_FORTUNE.bankAccount || "",
+        sendEmail: true // ✅ chỉ gửi ở đây
+      });
+      // tránh bấm lại spam mail
+      PENDING_WISH_MESSAGE = "";
+    }
+  }catch(e){
+    console.warn("send final email failed:", e);
+  }
+
   hideFlow();
   setStatus('🎉 Chúc bạn năm mới vui vẻ! Nếu muốn nghe nhạc thì bấm Play ở góc trên nha 🎶', false);
   burst(window.innerWidth*0.5, window.innerHeight*0.2, 160);
@@ -1504,71 +1416,26 @@ async function openLuckFlow(){
 
   const k = playKey();
   const owner = isOwnerRole();
-  const repeat = canRepeatMiniGame(session.viewer);
 
   if (!owner && !isUnlocked(k)){
     alert('Bạn hãy Gửi lời chúc cho chủ sở hữu trước để mở khóa Nhận lộc nhé 💌');
     return false;
   }
 
-  // ✅ nếu Owner đã cấp quyền chơi lại (từ bất kỳ thiết bị nào), người chơi sẽ được mở lại lượt
-  consumeReplay(k);
-  try{
-    await ensureServices();
-    const ok = await window.AppServices?.consumeReplay?.(k);
-    if (ok){
-      localStorage.removeItem(keyPlayed(k));
-    }
-  }catch(e){
-    // ignore
-  }
-
-  if (!repeat && hasPlayed(k)){
-    alert('Bạn đã chơi rồi 😊 Mỗi người chỉ chơi 1 lần.');
-    return false;
-  }
-
-  if (!repeat) markPlayed(k);
-
+  // ✅ bỏ giới hạn 1 lần: ai cũng chơi lại vô hạn
   startFlowFor(session.target);
   return true;
 }
 
 btnOpenLuck?.addEventListener('click', openLuckFlow);
-
 btnSuccessLuck?.addEventListener('click', () => {
   hideSuccessPage();
   openLuckFlow();
 });
 
-btnOwnerReplay?.addEventListener('click', async () => {
-  if (!isOwnerRole() || !selectedPerson) return;
-
-  const k = String(selectedPerson.key || '');
-  if (!k) return;
-
-  // local (máy hiện tại)
-  localStorage.setItem(keyOwnerReplay(k), '1');
-  localStorage.setItem(keyUnlocked(k), '1');
-  localStorage.removeItem(keyPlayed(k));
-
-  // server (để người chơi chơi lại trên mọi thiết bị)
-  try{
-    await ensureServices();
-    await window.AppServices?.grantReplay?.(k);
-  }catch(e){
-    console.warn('grantReplay failed', e);
-  }
-
-  alert('✅ Đã cho người này chơi lại.');
-  refreshGameLockUI();
-});
-
 // ===== Auto fireworks toggle =====
 const autoToggle = $('auto');
-autoToggle?.addEventListener('change', () => {
-  autoFire = !!autoToggle.checked;
-});
+autoToggle?.addEventListener('change', () => { autoFire = !!autoToggle.checked; });
 if (autoToggle) autoFire = !!autoToggle.checked;
 
 // ===== Init =====
@@ -1593,7 +1460,6 @@ async function init(){
     setStatus('❌ Lỗi tải danh sách người (people.json).', true);
   }
 
-  // mặc định khóa
   lockCard();
   updateOwnerUI();
   refreshGameLockUI();
