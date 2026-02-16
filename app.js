@@ -424,37 +424,6 @@ const GLOBAL_WISHES = [
   "{name}님, {year}년엔 좋은 사람들과 좋은 일만 가득하길 🫶",
   "Chúc {name} {year} mọi deadline đều qua nhẹ như lông hồng ⏳🪽",
   "In {year}, may you feel proud of yourself more often, {name}. 🌈",
-  "{year}년에도 {name}님이 원하는 길로 쭉 나아가길 🚀",
-  "Năm {year} chúc {name} đi đâu cũng gặp điều lành, về đâu cũng thấy yên 🏡✨",
-  "May {year} be kind to you, {name}. 🤍",
-  "{name}님, {year}년엔 마음이 늘 편안하길 🌿",
-  "Chúc {name} năm {year} rực rỡ theo cách của riêng mình 🌟",
-  "Wishing {name} a {year} filled with love, laughter, and peace. 🕊️",
-  "Năm {year} chúc {name} làm đâu thắng đó, thuận lợi đủ đường 🚀",
-  "May your hard work pay off beautifully in {year}, {name}. 📈",
-  "{year}년엔 {name}님에게 행운이 자주 찾아오길 🍀",
-  "Chúc {name} {year} cười nhiều hơn, lo ít hơn, yêu đời hơn 😊🌷",
-  "You’ve got this, {name}—make {year} your year. 💥",
-  "{name}님, {year}년엔 좋은 소식만 들리길 💌",
-  "Năm {year} chúc {name} tình cảm ấm áp, gia đình bình an 💖",
-  "May {year} bring you the right people and the right moments, {name}. 🎯",
-  "{year}년에는 {name}님 하루하루가 반짝이길 ✨",
-  "Chúc {name} {year} học gì hiểu đó, làm gì cũng tới 📚✅",
-  "Hope {year} gives you more reasons to smile, {name}. 😄",
-  "{name}님, {year}년엔 건강이 최고예요! 💪",
-  "Năm {year} chúc {name} may mắn tới tấp, niềm vui ngập tràn 🎉",
-  "May your heart feel lighter in {year}, {name}. 🌿",
-  "{year}년에도 {name}님이 사랑받는 사람인 거 잊지 마요 💗",
-  "Chúc {name} {year} công việc hanh thông, lương thưởng tăng đều 💼📈",
-  "Wishing you cozy moments and big dreams in {year}, {name}. ☕🌙",
-  "{name}님, {year}년엔 모든 일이 술술 풀리길 🌈",
-  "Năm {year} chúc {name} mỗi ngày đều có lý do để vui 😄✨",
-  "May {year} be your fresh start, {name}. 🌸",
-  "Chúc {name} {year} sáng tạo bùng nổ, ý tưởng ra như suối 💡🌊",
-  "May you find joy in the little things this {year}, {name}. 🌼",
-  "{name}님, {year}년엔 새로운 시작이 기분 좋게 이어지길 🌱",
-  "Năm {year} chúc {name} bình an là chính, vui vẻ là nhất 🕊️",
-  "Wishing you steady growth and soft happiness in {year}, {name}. 🌿",
   "{year}년, {name}님에게 좋은 기회가 꼭 오길 ✨",
   "Chúc {name} {year} gặp đúng người, đúng việc, đúng thời điểm 🎯",
   "May your dreams feel closer in {year}, {name}. 🌙",
@@ -478,6 +447,9 @@ let selectedPerson = null;
 let lastWishIndex = -1;
 let session = { loggedIn:false, viewer:null, target:null };
 const firstWishShown = new Set();
+
+// ✅ key lưu “lộc mới nhất” theo viewer
+const LAST_FORTUNE_PREFIX = 'hpny2026_lastFortune_';
 
 function setStatus(msg, bad=false){
   if (!statusEl) return;
@@ -688,6 +660,7 @@ async function renderOwnerTab(){
         </div>
       ` : '';
 
+      // ✅ UPDATED: wishes hiển thị luôn lộc + bank + stk nếu có (do services.js mới lưu)
       const wishesHtml = wishes.length ? wishes.map(w => `
         <div class="ownerRow">
           <div class="ownerMeta">
@@ -695,6 +668,14 @@ async function renderOwnerTab(){
             gửi khi đang xem thiệp: <b>${escapeHtml(w.targetLabel || w.targetKey || '')}</b>
             • ${escapeHtml(fmtTime(w.createdAt))}
           </div>
+
+          ${(w.bankName || w.bankAccount || w.fortuneAmount) ? `
+            <div class="ownerMeta">
+              🧧 Lộc: <b>${escapeHtml(formatMoneyVND(w.fortuneAmount || 0))}</b>
+              ${(w.bankName || w.bankAccount) ? ` • 🏦 ${escapeHtml(w.bankName || '')} • ${escapeHtml(w.bankAccount || '')}` : ``}
+            </div>
+          ` : ``}
+
           <div style="white-space:pre-wrap">${escapeHtml(w.message || '')}</div>
           <div class="row" style="justify-content:flex-end">
             <button class="btnSecondary" type="button" data-del-wish="${escapeHtml(w.id)}">🗑 Xoá</button>
@@ -990,6 +971,13 @@ function applySessionUI(){
   if (btnSendWish) btnSendWish.disabled = false;
   if (wishMsg) wishMsg.disabled = false;
 
+  // ✅ restore last fortune nếu có (để gửi mail không bị 0)
+  try{
+    const vk = playKey();
+    const raw = localStorage.getItem(LAST_FORTUNE_PREFIX + vk);
+    if (raw) window.__lastFortune = JSON.parse(raw);
+  }catch(e){}
+
   try{ window.AppServices?.startView?.(session.viewer, session.target); }catch{}
   updateOwnerUI();
 
@@ -1087,12 +1075,27 @@ btnSendWish?.addEventListener('click', async () => {
     btnSendWish.disabled = true;
     await ensureServices();
 
+    // ✅ lấy “lộc mới nhất” để gửi kèm Gmail
+    let f = window.__lastFortune || null;
+    if (!f){
+      try{
+        const vk = playKey();
+        const raw = localStorage.getItem(LAST_FORTUNE_PREFIX + vk);
+        if (raw) f = JSON.parse(raw);
+      }catch(e){}
+    }
+
     const result = await window.AppServices.sendWish({
       viewerKey: session.viewer?.key || '',
       viewerLabel: session.viewer?.label || '',
       targetKey: session.target?.key || '',
       targetLabel: session.target?.label || '',
-      message
+      message,
+
+      // ✅ NEW: gửi kèm info nhận lộc về Gmail + lưu Firestore wishes
+      fortuneAmount: Number(f?.amount || 0),
+      bankName: String(f?.bankName || ''),
+      bankAccount: String(f?.bankAccount || '')
     });
 
     if (result && (result.savedToFirestore || result.emailed)){
@@ -1300,8 +1303,7 @@ const FORTUNE_MESSAGES = {
     '{name} nhận lộc 200k – chúc {year} tiền vào như nước, niềm vui ngập tràn 🎉💰',
     'Lộc 200k gửi {name}: chúc {year} mọi điều như ý, an yên và đủ đầy 🤍',
     '{year} chúc {name} bước qua mọi thử thách thật đẹp, thật vững vàng 💪',
-  ]
-,
+  ],
   500000: [
     '{name} nhận lộc 500k – chúc năm {year} bùng nổ tài lộc, làm đâu thắng đó 💥💰',
     'Lộc 500k gửi {name}: chúc {year} phát tài phát lộc, mọi việc hanh thông 🎉',
@@ -1445,7 +1447,6 @@ btnShake?.addEventListener('click', async () => {
   const person = flowState.person;
 
   envelope?.classList.remove('shake');
-  // reflow để animation chạy lại
   void envelope?.offsetWidth;
   envelope?.classList.add('shake');
 
@@ -1460,6 +1461,13 @@ btnShake?.addEventListener('click', async () => {
       ? `📩 Đã ghi nhớ: ${bn} • ${ba} • ${new Date().toLocaleString('vi-VN')}`
       : `${new Date().toLocaleString('vi-VN')}`;
   }
+
+  // ✅ LƯU “lộc mới nhất” để gửi kèm Gmail khi gửi lời chúc
+  window.__lastFortune = { amount: Number(f.amount || 0), bankName: bn, bankAccount: ba };
+  try{
+    const vk = playKey();
+    if (vk) localStorage.setItem(LAST_FORTUNE_PREFIX + vk, JSON.stringify(window.__lastFortune));
+  }catch(e){}
 
   flowState.fortuneDone = true;
   btnFinish?.classList.remove('hidden');
@@ -1509,7 +1517,6 @@ async function openLuckFlow(){
     await ensureServices();
     const ok = await window.AppServices?.consumeReplay?.(k);
     if (ok){
-      // sync lại local trạng thái
       localStorage.removeItem(keyPlayed(k));
     }
   }catch(e){
@@ -1531,7 +1538,6 @@ btnOpenLuck?.addEventListener('click', openLuckFlow);
 
 btnSuccessLuck?.addEventListener('click', () => {
   hideSuccessPage();
-  // nếu đã unlock xong, mở luôn
   openLuckFlow();
 });
 
@@ -1572,7 +1578,6 @@ async function init(){
   initPetals();
 
   if (ctx){
-    // Clear at start
     ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
     requestAnimationFrame(stepFx);
   }
