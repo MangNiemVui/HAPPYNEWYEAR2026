@@ -726,3 +726,69 @@ button:disabled{opacity:.55; cursor:not-allowed; transform:none; filter:none;}
   font-size: 13px;
   box-shadow: 0 10px 24px rgba(180,0,24,.14);
 }
+/* ===== MOBILE SCROLL + SAFE AREA FIX ===== */
+html, body{
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body{
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+/* Nếu bạn có wrapper/container chính, ép nó không khóa scroll */
+#app, .app, .page, .container{
+  min-height: 100vh;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* Modal/menu/owner dashboard phải scroll được */
+#menu, .menu,
+#ownerModal .modalBody, #ownerBody,
+#flow, .flow,
+#successPage, .successPage{
+  max-height: 90vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* FIX iOS: tránh 100vh bị sai do thanh địa chỉ */
+:root{
+  --vh: 1vh;
+}
+@supports (height: 100dvh){
+  .fullvh{ height: 100dvh; }
+}
+
+/* ===== FIX TOP CONTROL BAR (nhạc + nút) KHÔNG NHẢY ===== */
+.topBar, .controls, .musicBar{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Nút bấm cố định kích thước để không “nhảy” */
+button, .btn, .btnPrimary, .btnSecondary{
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+/* Khối nhạc: canh hàng cố định */
+#btnMusic, #btnPrev, #btnNext{
+  flex: 0 0 auto;
+}
+
+/* Select nhạc không làm vỡ layout */
+#musicSelect{
+  max-width: 48vw;
+}
+
+/* Tránh element nào đó dùng overflow hidden làm chết scroll */
+*{
+  -webkit-tap-highlight-color: transparent;
+}
